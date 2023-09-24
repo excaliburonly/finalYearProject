@@ -4,7 +4,7 @@ import pywt
 import matplotlib.pyplot as plt
 
 # Load the image
-imageyes = cv2.imread('Y27.jpg')
+imageyes = cv2.imread('yesimg.jpg')
 imageno = cv2.imread('noimg.jpg')
 
 # Perform wavelet transform
@@ -40,7 +40,7 @@ hist_no = cv2.calcHist([equalized_image_no], [0], None, [256], [0,256])
 # Plot the histograms
 plt.figure(figsize=(12, 6))
 plt.subplot(121)
-plt.title('Yes Image Histogram')
+plt.title('Yes tumor Image Histogram')
 plt.xlabel('Pixel Value')
 plt.ylabel('Frequency')
 plt.bar(np.arange(256), hist_yes[:, 0], width=1)
@@ -48,7 +48,7 @@ plt.xlim([0, 256])
 plt.grid()
 
 plt.subplot(122)
-plt.title('No image histogram')
+plt.title('No tumor image histogram')
 plt.xlabel('Pixel Value')
 plt.ylabel('Frequency')
 plt.bar(np.arange(256), hist_no[:, 0], width=1)
@@ -58,12 +58,11 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
-threshold_value = 175
+threshold_value = 220
 
 # Apply binary thresholding
 _, binary_image_yes = cv2.threshold(equalized_image_yes, threshold_value, 255, cv2.THRESH_BINARY)
 _, binary_image_no = cv2.threshold(equalized_image_no, threshold_value, 255, cv2.THRESH_BINARY)
-
 
 # Display the original and blurred images
 cv2.imshow('Original Image with tumor', imageyes)
